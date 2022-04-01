@@ -11,3 +11,14 @@ Based on / huge thanks to:
 https://github.com/Shopify/liquid-tm-grammar/<br>
 https://github.com/braver/sublime-liquid/<br>
 Sublime’s built-in PHP syntax
+
+## Installation
+
+Clone into `Packages/Liquid`
+
+For example, on macOS:
+
+```sh
+cd ~/Library/Application\ Support/Sublime\ Text/Packages
+git clone https://github.com/nikitaourazbaev/st4-liquid.git Liquid
+```
