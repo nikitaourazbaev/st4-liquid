@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/syntax.html
+name: Liquid CSS
+version: 2
+file_extensions:
+  - css.liquid
+scope: source.liquid.css
+# hidden: true
+
+extends: Packages/Liquid/Liquid Core.sublime-syntax
+
+contexts:
+  main:
+    - match: ""
+      push: "Packages/CSS/CSS.sublime-syntax"
+      with_prototype:
+        - include: liquid-core
+
+
+
+

@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/syntax.html
+name: Liquid HTML
+version: 2
+file_extensions:
+  - liquid
+scope: text.html.liquid
+
+extends: Packages/Liquid/Liquid Core.sublime-syntax
+
+contexts:
+  main:
+    - match: ""
+      push: "Packages/HTML/HTML.sublime-syntax"
+      with_prototype:
+        - include: liquid-core
+

@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/syntax.html
+name: Liquid JavaScript
+version: 2
+file_extensions:
+  - js.liquid
+scope: source.liquid.js
+# hidden: true
+
+extends: Packages/Liquid/Liquid Core.sublime-syntax
+
+contexts:
+  main:
+    - match: ""
+      push: "Packages/JavaScript/JavaScript.sublime-syntax"
+      with_prototype:
+        - include: liquid-core

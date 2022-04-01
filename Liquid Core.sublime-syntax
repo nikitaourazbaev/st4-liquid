@@ -1,0 +1,207 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/syntax.html
+name: Liquid Core
+version: 2
+scope: source.liquid
+hidden: true
+
+variables:
+  beginning: '(?:(?:(?<={%)|(?<={%-)|^)\s*)'
+  # These are predefined Liquid objects on Shopify
+  constants: '(additional_checkout_buttons|address|all_country_option_tags|all_products|article|articles|block|blog|blogs|canonical_url|cart|checkout|collection|collections|comment|content_for_additional_checkout_buttons|content_for_header|content_for_index|content_for_layout|country_option_tags|currency|current_page|current_tags|customer|customer_address|discount_allocation|discount_application|external_video|font|forloop|form|fulfillment|gift_card|handle|image|images|line_item|link|linklist|linklists|location|localization|metafield|model|model_source|order|page|page_description|page_image|page_title|pages|paginate|part|policy|powered_by_link|predictive_search|product|product_option|product_variant|recommendations|request|routes|script|scripts|search|section|settings|selling_plan|selling_plan_allocation|selling_plan_group|settings|shipping_method|shop|shop_locale|store_availability|tablerow|tax_line|template|theme|transaction|unit_price_measurement|variant|video|video_source)'
+
+contexts:
+  main:
+    - include: liquid-core
+
+  liquid-core:
+    - match: ({%-?)\s?(liquid)
+      scope: embedding.liquid
+      captures:
+        0: punctuation.section.embedded.begin.liquid
+      push: expr-liquid
+    - match: ({%-?)\s*(schema)\s*(-?%})
+      scope: meta.embedded.block.json
+      captures:
+        1: punctuation.section.embedded.begin.liquid
+        2: keyword.control.liquid
+        3: punctuation.section.embedded.begin.liquid
+      embed: scope:source.json
+      escape: ({%-?)\s*(endschema)\s*(-?%})
+      escape_captures:
+        1: punctuation.section.embedded.begin.liquid
+        2: keyword.control.liquid
+        3: punctuation.section.embedded.begin.liquid
+    - match: ({%-?)\s*(style|stylesheet)\s*(-?%})
+      captures:
+        1: punctuation.section.embedded.begin.liquid
+        2: keyword.control.liquid
+        3: punctuation.section.embedded.begin.liquid
+      embed: scope:source.liquid.css
+      # embed_scope: source.css.embedded.liquid
+      escape: ({%-?)\s*(endstyle|endstylesheet)\s*(-?%})
+      escape_captures:
+        1: punctuation.section.embedded.begin.liquid
+        2: keyword.control.liquid
+        3: punctuation.section.embedded.begin.liquid
+    - match: ({%-?)\s*(javascript)\s*(-?%})
+      scope: meta.embedded.block.js
+      captures:
+        1: punctuation.section.embedded.begin.liquid
+        2: keyword.control.liquid
+        3: punctuation.section.embedded.begin.liquid
+      embed: scope:source.js
+      escape: ({%-?)\s*(endjavascript)\s*(-?%})
+      escape_captures:
+        1: punctuation.section.embedded.begin.liquid
+        2: keyword.control.liquid
+        3: punctuation.section.embedded.begin.liquid
+    - match: ({%-?)\s*(raw)\s*(-?%})
+      scope: string.unquoted.liquid
+      captures:
+        1: punctuation.section.embedded.begin.liquid
+        2: keyword.control.liquid
+        3: punctuation.section.embedded.begin.liquid
+      embed: scope:source.plaintext
+      escape: ({%-?)\s*(endraw)\s*(-?%})
+      escape_captures:
+        1: punctuation.section.embedded.begin.liquid
+        2: keyword.control.liquid
+        3: punctuation.section.embedded.begin.liquid
+    - match: ({%-?)\s*(comment)\s*(-?%})
+      scope: comment.tag.liquid
+      push:
+        - meta_scope: comment.liquid
+        - match: ({%-?)\s*(endcomment)\s*(-?%})
+          scope: comment.tag.liquid
+          pop: true
+    - match: "{%-?"
+      scope: punctuation.section.embedded.begin.liquid
+      push: expr
+    - match: "{{-?"
+      scope: punctuation.section.embedded.begin.liquid
+      push: echo
+
+
+  expr-liquid:
+    - match: '{{beginning}}comment'
+      scope: comment.liquid
+      push:
+        - meta_scope: comment.liquid
+        - match: '\bendcomment\b'
+          scope: comment.liquid
+          pop: true
+    - include: expr
+
+  expr:
+    - include: types
+    - include: filters
+    - include: parameters
+    - match: \b(for|in|endfor|break|continue|paginate|endpaginate)\b
+      scope: keyword.control
+    - match: \b(case|if|elsif|unless|endcase|when|else|endif|endunless)\b
+      scope: keyword.control.conditional
+    - match: \b(endcapture|cycle|increment|decrement|echo|with|as)\b
+      scope: storage
+    # Match words that follow assign and capture to catch ones that have the same name as a predefined Liquid object before they're matched against {{constants}}
+    - match: \b(assign|capture)\b\s+([a-zA-Z0-9_\-]+)
+      captures:
+        1: storage
+        2: variable.other.readwrite.liquid
+    - include: constants
+    - match: '{{beginning}}(section|layout)(?!\:)\b'
+      scope: support.function.construct.liquid
+    - match: \b(liquid|render)\b
+      scope: support.function.construct.liquid
+    - match: \b(raw|endraw)\b
+      scope: entity.name.tag.liquid
+    - match: (==|=|!=|>|<|>=|<=|)|\b(or|and|contains)\b
+      scope: keyword.operator.expression.liquid
+    - include: liquid-variables
+    - match: "-?%}"
+      scope: punctuation.section.embedded.end.liquid
+      pop: true
+
+
+  echo:
+    - include: types
+    - include: filters
+    - include: parameters
+    - include: constants
+    - include: liquid-variables
+    - match: "-?}}"
+      scope: punctuation.section.embedded.end.liquid
+      pop: true
+
+
+  liquid-variables:
+    - match: ([a-zA-Z0-9_\-]+)
+      scope: variable.other
+
+  constants:
+    # If a word is in {{constants}} but followed by a colon, it's a named variable with the same name as a Liquid object
+    - match: '(?:(?<!\.))\b{{constants}}\b(?:(?!\:))'
+      scope: support.constant.liquid
+    - match: '(?:(?<=section\.))(settings|blocks|id)'
+      captures:
+        1: support.constant.liquid
+    - match: '(?:(?<=block\.))(settings|id|shopify_attributes)'
+      captures:
+        1: support.constant.liquid
+
+  filters:
+    - match: (\|)\s*([a-zA-Z0-9_\-]+)(\:)?
+      scope: meta.function-call.liquid
+      captures:
+        1: punctuation.generic.liquid
+        2: meta.function-call.method.liquid
+        3: punctuation.generic.liquid
+
+  parameters:
+    - match: ([a-zA-Z0-9_\-]+)(\:)
+      scope: meta.function.parameters.liquid
+      captures:
+        1: entity.other.attribute-name.liquid
+        2: punctuation.separator.key-value.liquid
+    - match: ','
+      scope: punctuation.generic.liquid
+    - match: '\.'
+      scope: punctuation.accessor.liquid
+    - match: '\[|\]'
+      scope: punctuation.accessor.liquid
+    - match: '\('
+      scope: punctuation.section.parens.begin.liquid
+    - match: '\.\.'
+      scope: keyword.operator.range.liquid
+    - match: '\)'
+      scope: punctuation.section.parens.end.liquid
+
+  types:
+    - include: strings
+    - match: '[0-9]+'
+      scope: constant.numeric.liquid
+    - match: '\b(none|blank|empty|true|false|nil|Nil)\b'
+      scope: constant.language.liquid
+
+  strings:
+    - match: "'"
+      scope: punctuation.definition.string.begin.liquid
+      push:
+        - meta_scope: string.quoted.single.liquid
+        - match: "(')|(\n)"
+          captures:
+            1: punctuation.definition.string.end.liquid
+            2: invalid.illegal.newline.liquid
+          pop: true
+
+    - match: '"'
+      scope: punctuation.definition.string.begin.liquid
+      push:
+        - meta_scope: string.quoted.double.liquid
+        - match: '(")|(\n)'
+          captures:
+            1: punctuation.definition.string.end.liquid
+            2: invalid.illegal.newline.liquid
+          pop: true
+
