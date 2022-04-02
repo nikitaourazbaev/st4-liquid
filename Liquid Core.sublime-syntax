@@ -85,6 +85,7 @@ contexts:
 
 
   expr-liquid:
+    - meta_scope: source.liquid
     - match: '{{beginning}}comment'
       scope: comment.liquid
       push:
