@@ -119,10 +119,11 @@ contexts:
       scope: entity.name.tag.liquid
     - match: (==|=|!=|>|<|>=|<=|)|\b(or|and|contains)\b
       scope: keyword.operator.expression.liquid
-    - include: liquid-variables
     - match: "-?%}"
       scope: punctuation.section.embedded.end.liquid
+      captures:
       pop: true
+    - include: liquid-variables
 
 
   echo:
@@ -130,10 +131,10 @@ contexts:
     - include: filters
     - include: parameters
     - include: constants
-    - include: liquid-variables
     - match: "-?}}"
       scope: punctuation.section.embedded.end.liquid
       pop: true
+    - include: liquid-variables
 
 
   liquid-variables:
