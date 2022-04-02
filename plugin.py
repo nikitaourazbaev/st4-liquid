@@ -1,7 +1,7 @@
 import sublime
 import sublime_plugin
 
-# Uncomment the key bindings in Default.sublime-keymap to enable
+# Enable key bindings to turn on
 
 class LiquidHandleSpaceCommand(sublime_plugin.TextCommand):
     def run(self, edit):

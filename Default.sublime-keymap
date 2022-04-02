@@ -1,18 +1,46 @@
 [
   // {
   //   "keys": ["%"],
-  //   "command": "liquid_handle_percent"
+  //   "command": "liquid_handle_percent",
+  //   "context": [
+  //     {
+  //       "key": "selector",
+  //       "operator": "equal",
+  //       "operand": "text.html.liquid"
+  //     }
+  //   ]
   // },
   // {
   //   "keys": ["{"],
-  //   "command": "liquid_handle_brace"
+  //   "command": "liquid_handle_brace",
+  //   "context": [
+  //     {
+  //       "key": "selector",
+  //       "operator": "equal",
+  //       "operand": "text.html.liquid"
+  //     }
+  //   ]
   // },
   // {
   //   "keys": [" "],
-  //   "command": "liquid_handle_space"
+  //   "command": "liquid_handle_space",
+  //   "context": [
+  //     {
+  //       "key": "selector",
+  //       "operator": "equal",
+  //       "operand": "text.html.liquid"
+  //     }
+  //   ]
   // },
   // {
   //   "keys": ["-"],
-  //   "command": "liquid_handle_minus"
-  // },
+  //   "command": "liquid_handle_minus",
+  //   "context": [
+  //     {
+  //       "key": "selector",
+  //       "operator": "equal",
+  //       "operand": "text.html.liquid"
+  //     }
+  //   ]
+  // }
 ]
