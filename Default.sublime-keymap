@@ -1,0 +1,18 @@
+[
+  // {
+  //   "keys": ["%"],
+  //   "command": "liquid_handle_percent"
+  // },
+  // {
+  //   "keys": ["{"],
+  //   "command": "liquid_handle_brace"
+  // },
+  // {
+  //   "keys": [" "],
+  //   "command": "liquid_handle_space"
+  // },
+  // {
+  //   "keys": ["-"],
+  //   "command": "liquid_handle_minus"
+  // },
+]
