@@ -27,8 +27,7 @@ class LiquidHandleSpaceCommand(sublime_plugin.TextCommand):
                                 view.run_command("move", {"by": "characters", "forward": False})
                             return
 
-            self.view.run_command("insert", {"characters": " "})
-            return
+        self.view.run_command("insert", {"characters": " "})
 
 class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -56,8 +55,7 @@ class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
                             for x in range(0, 2):
                                 view.run_command("move", {"by": "characters", "forward": False})
 
-            self.view.run_command("insert", {"characters": "%"})
-            return
+        self.view.run_command("insert", {"characters": "%"})
 
 class LiquidHandleMinusCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -81,8 +79,7 @@ class LiquidHandleMinusCommand(sublime_plugin.TextCommand):
                                 view.run_command("move", {"by": "characters", "forward": False})
                             return
 
-            self.view.run_command("insert", {"characters": "-"})
-            return
+        self.view.run_command("insert", {"characters": "-"})
 
 class LiquidHandleBraceCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -106,6 +103,4 @@ class LiquidHandleBraceCommand(sublime_plugin.TextCommand):
                                 view.run_command("move", {"by": "characters", "forward": False})
                             return
 
-            self.view.run_command("insert", {"characters": "{"})
-            return
-
+        self.view.run_command("insert", {"characters": "{"})
