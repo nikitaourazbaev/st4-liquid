@@ -6,7 +6,7 @@
   <key>settings</key>
   <dict>
     <key>decreaseIndentPattern</key>
-    <string>^\s*\b(else|elsif|endif|endfor|endcase|endpaginate|endcomment)\b.*.*$</string>
+    <string>^\s*\b(else|elsif|endif|endfor|endcase|endpaginate|endcomment)\b.*$</string>
 
     <key>increaseIndentPattern</key>
     <string>^\s*\b(if|else|elsif|for|case|paginate|comment)\b.*$</string>
