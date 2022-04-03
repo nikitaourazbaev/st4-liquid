@@ -96,11 +96,15 @@ class LiquidHandleBraceCommand(sublime_plugin.TextCommand):
             for region in selectedRegions:
                 prevCharacter = view.substr(sublime.Region(region.a - 2, region.a - 1))
 
-                if prevCharacter == '{':
+                lineContents = view.substr(view.line(view.sel()[0]))
+
+                if not '}' in lineContents:
+                    view.run_command("insert", {"characters": '}'})
+                    view.run_command("move", {"by": "characters", "forward": False})
+                elif prevCharacter == '{':
                     nextCharacter = view.substr(sublime.Region(region.a, region.a + 1))
 
-                    if nextCharacter != '}':
-                        view.run_command("insert", {"characters": '}}'})
-                        for x in range(0, 2):
-                            view.run_command("move", {"by": "characters", "forward": False})
+                    if not '}}' in lineContents:
+                        view.run_command("insert", {"characters": '}'})
+                        view.run_command("move", {"by": "characters", "forward": False})
 
