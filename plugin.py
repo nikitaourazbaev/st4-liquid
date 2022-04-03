@@ -29,9 +29,9 @@ class LiquidHandleSpaceCommand(sublime_plugin.TextCommand):
                         for x in range(0, 1):
                             view.run_command("move", {"by": "characters", "forward": False})
 
-                if nextFourCharacters == ' -%}' or nextThreeCharacters == ' %}' or nextFourCharacters == ' -}}' or nextThreeCharacters == ' }}':
-                    view.run_command("move", {"by": "characters", "forward": True})
-                    view.run_command("left_delete")
+                # if nextFourCharacters == ' -%}' or nextThreeCharacters == ' %}' or nextFourCharacters == ' -}}' or nextThreeCharacters == ' }}':
+                #     view.run_command("move", {"by": "characters", "forward": True})
+                #     view.run_command("left_delete")
 
 
 class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
