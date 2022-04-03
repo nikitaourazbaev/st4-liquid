@@ -17,16 +17,21 @@ class LiquidHandleSpaceCommand(sublime_plugin.TextCommand):
             for region in selectedRegions:
                 prevThreeCharacters = view.substr(sublime.Region(region.a - 4, region.a - 1))
                 prevTwoCharacters = view.substr(sublime.Region(region.a - 3, region.a - 1))
+                nextFourCharacters = view.substr(sublime.Region(region.a, region.a + 4))
+                nextThreeCharacters = view.substr(sublime.Region(region.a, region.a + 3))
+                nextTwoCharacters = view.substr(sublime.Region(region.a, region.a + 2))
 
                 if prevThreeCharacters == '{%-' or prevThreeCharacters == '{{-' or prevTwoCharacters == '{%' or prevTwoCharacters == '{{':
-                    nextThreeCharacters = view.substr(sublime.Region(region.a, region.a + 3))
-                    nextTwoCharacters = view.substr(sublime.Region(region.a, region.a + 2))
+
 
                     if nextTwoCharacters == '%}' or nextTwoCharacters == '}}' or nextThreeCharacters == '-%}' or nextThreeCharacters == '-}}':
                         view.run_command("insert", {"characters": ' '})
                         for x in range(0, 1):
                             view.run_command("move", {"by": "characters", "forward": False})
 
+                if nextFourCharacters == ' -%}' or nextThreeCharacters == ' %}' or nextFourCharacters == ' -}}' or nextThreeCharacters == ' }}':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
 
 
 class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
@@ -42,11 +47,12 @@ class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
 
             for region in selectedRegions:
                 prevCharacter = view.substr(sublime.Region(region.a - 2, region.a - 1))
+                nextChar = view.substr(sublime.Region(region.a, region.a + 1))
+                nextTwoCharacters = view.substr(sublime.Region(region.a, region.a + 2))
 
                 lineContents = view.substr(view.line(view.sel()[0]))
 
                 if prevCharacter == '{':
-                    nextChar = view.substr(sublime.Region(region.a, region.a + 1))
                     if nextChar == '}':
                         view.run_command("insert", {"characters": '%'})
                         for x in range(0, 1):
@@ -55,6 +61,9 @@ class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
                         view.run_command("insert", {"characters": '%}'})
                         for x in range(0, 2):
                             view.run_command("move", {"by": "characters", "forward": False})
+                if nextTwoCharacters == '%}':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
 
 
 
@@ -71,23 +80,26 @@ class LiquidHandleMinusCommand(sublime_plugin.TextCommand):
 
             for region in selectedRegions:
                 prevTwoCharacters = view.substr(sublime.Region(region.a - 3, region.a - 1))
+                nextThreeCharacters = view.substr(sublime.Region(region.a, region.a + 3))
+                nextTwoCharacters = view.substr(sublime.Region(region.a, region.a + 2))
 
                 if prevTwoCharacters == '{%' or prevTwoCharacters == '{{':
-                    nextTwoCharacters = view.substr(sublime.Region(region.a, region.a + 2))
-
                     if nextTwoCharacters == '%}' or nextTwoCharacters == '}}':
                         view.run_command("insert", {"characters": '-'})
                         for x in range(0, 1):
                             view.run_command("move", {"by": "characters", "forward": False})
+                if nextThreeCharacters == '-%}' or nextThreeCharacters == '-}}':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
 
 
 
-class LiquidHandleBraceCommand(sublime_plugin.TextCommand):
+class LiquidHandleLeftBraceCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         self.view.run_command("insert", {"characters": "{"})
 
         if not self.view.settings().get("is_widget", False):
-            # print("Brace was pressed in LiquidHandleBrace")
+            # print("LeftBrace was pressed in LiquidHandleLeftBrace")
 
             view = self.view
 
@@ -102,9 +114,27 @@ class LiquidHandleBraceCommand(sublime_plugin.TextCommand):
                     view.run_command("insert", {"characters": '}'})
                     view.run_command("move", {"by": "characters", "forward": False})
                 elif prevCharacter == '{':
-                    nextCharacter = view.substr(sublime.Region(region.a, region.a + 1))
-
                     if not '}}' in lineContents:
                         view.run_command("insert", {"characters": '}'})
                         view.run_command("move", {"by": "characters", "forward": False})
 
+class LiquidHandleRightBraceCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        self.view.run_command("insert", {"characters": "}"})
+
+        if not self.view.settings().get("is_widget", False):
+            # print("RightBrace was pressed in LiquidHandleRightBrace")
+
+            view = self.view
+
+            selectedRegions = view.sel()
+
+            for region in selectedRegions:
+                prevCharacter = view.substr(sublime.Region(region.a - 2, region.a - 1))
+                nextCharacter = view.substr(sublime.Region(region.a, region.a + 1))
+
+                lineContents = view.substr(view.line(view.sel()[0]))
+
+                if nextCharacter == '}':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
