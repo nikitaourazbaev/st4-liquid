@@ -17,6 +17,7 @@ class LiquidHandleSpaceCommand(sublime_plugin.TextCommand):
             for region in selectedRegions:
                 prevThreeCharacters = view.substr(sublime.Region(region.a - 4, region.a - 1))
                 prevTwoCharacters = view.substr(sublime.Region(region.a - 3, region.a - 1))
+                prevCharacter = view.substr(sublime.Region(region.a - 2, region.a - 1))
                 nextFourCharacters = view.substr(sublime.Region(region.a, region.a + 4))
                 nextThreeCharacters = view.substr(sublime.Region(region.a, region.a + 3))
                 nextTwoCharacters = view.substr(sublime.Region(region.a, region.a + 2))
@@ -29,9 +30,11 @@ class LiquidHandleSpaceCommand(sublime_plugin.TextCommand):
                         for x in range(0, 1):
                             view.run_command("move", {"by": "characters", "forward": False})
 
-                # if nextFourCharacters == ' -%}' or nextThreeCharacters == ' %}' or nextFourCharacters == ' -}}' or nextThreeCharacters == ' }}':
-                #     view.run_command("move", {"by": "characters", "forward": True})
-                #     view.run_command("left_delete")
+                if prevCharacter == ' ':
+                    if nextFourCharacters == ' -%}' or nextThreeCharacters == ' %}' or nextFourCharacters == ' -}}' or nextThreeCharacters == ' }}':
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        for x in range(0, 2):
+                            view.run_command("left_delete")
 
 
 class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
