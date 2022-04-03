@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+  <key>scope</key>
+  <string>text.html.liquid</string>
+  <key>settings</key>
+  <dict>
+    <key>decreaseIndentPattern</key>
+    <string>^\s*{%-?\s*\b(else|elsif|endif|endfor|endcase|endpaginate|endcomment)\b.*-?%}.*$|^\s*-?%}\s*$</string>
+
+    <key>increaseIndentPattern</key>
+    <string>^\s*{%-?\s*\b(if|else|elsif|for|case|paginate|comment|render)\b.*(-?%})?.*$</string>
+  </dict>
+</dict>
+</plist>
