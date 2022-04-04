@@ -168,14 +168,14 @@ contexts:
         2: punctuation.separator.key-value.liquid
     - match: ','
       scope: punctuation.generic.liquid
+    - match: '\.\.'
+      scope: keyword.operator.range.liquid
     - match: '\.'
       scope: punctuation.accessor.liquid
     - match: '\[|\]'
       scope: punctuation.accessor.liquid
     - match: '\('
       scope: punctuation.section.parens.begin.liquid
-    - match: '\.\.'
-      scope: keyword.operator.range.liquid
     - match: '\)'
       scope: punctuation.section.parens.end.liquid
 
@@ -183,7 +183,7 @@ contexts:
     - include: strings
     - match: '[0-9]+'
       scope: constant.numeric.liquid
-    - match: '\b(none|blank|empty|true|false|nil|Nil)\b'
+    - match: '\b(none|blank|empty|true|false|nil)\b'
       scope: constant.language.liquid
 
   strings:
