@@ -148,7 +148,7 @@ contexts:
     - match: '(?:(?<=section\.))(settings|blocks|id)'
       captures:
         1: support.constant.liquid
-    - match: '(?:(?<=block\.))(settings|id|shopify_attributes)'
+    - match: '(?:(?<=block\.))(settings|id|type|shopify_attributes)'
       captures:
         1: support.constant.liquid
 
