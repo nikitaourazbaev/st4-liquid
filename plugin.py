@@ -30,11 +30,11 @@ class LiquidHandleSpaceCommand(sublime_plugin.TextCommand):
                         for x in range(0, 1):
                             view.run_command("move", {"by": "characters", "forward": False})
 
-                if prevCharacter == ' ':
-                    if nextFourCharacters == ' -%}' or nextThreeCharacters == ' %}' or nextFourCharacters == ' -}}' or nextThreeCharacters == ' }}':
-                        view.run_command("move", {"by": "characters", "forward": True})
-                        for x in range(0, 2):
-                            view.run_command("left_delete")
+                # if prevCharacter == ' ':
+                #     if nextFourCharacters == ' -%}' or nextThreeCharacters == ' %}' or nextFourCharacters == ' -}}' or nextThreeCharacters == ' }}':
+                #         view.run_command("move", {"by": "characters", "forward": True})
+                #         for x in range(0, 2):
+                #             view.run_command("left_delete")
 
 
 class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
@@ -52,6 +52,7 @@ class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
                 prevCharacter = view.substr(sublime.Region(region.a - 2, region.a - 1))
                 nextChar = view.substr(sublime.Region(region.a, region.a + 1))
                 nextTwoCharacters = view.substr(sublime.Region(region.a, region.a + 2))
+                nextThreeCharacters = view.substr(sublime.Region(region.a, region.a + 3))
 
                 lineContents = view.substr(view.line(view.sel()[0]))
 
@@ -67,6 +68,12 @@ class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
                 if nextTwoCharacters == '%}':
                     view.run_command("move", {"by": "characters", "forward": True})
                     view.run_command("left_delete")
+                if nextThreeCharacters == ' %}' and prevCharacter == ' ':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
+
 
 
 
@@ -83,6 +90,8 @@ class LiquidHandleMinusCommand(sublime_plugin.TextCommand):
 
             for region in selectedRegions:
                 prevTwoCharacters = view.substr(sublime.Region(region.a - 3, region.a - 1))
+                prevCharacter = view.substr(sublime.Region(region.a - 2, region.a - 1))
+                nextFourCharacters = view.substr(sublime.Region(region.a, region.a + 4))
                 nextThreeCharacters = view.substr(sublime.Region(region.a, region.a + 3))
                 nextTwoCharacters = view.substr(sublime.Region(region.a, region.a + 2))
 
@@ -92,6 +101,12 @@ class LiquidHandleMinusCommand(sublime_plugin.TextCommand):
                         for x in range(0, 1):
                             view.run_command("move", {"by": "characters", "forward": False})
                 if nextThreeCharacters == '-%}' or nextThreeCharacters == '-}}':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
+
+                if (nextFourCharacters == ' -}}' or nextFourCharacters == ' -%}') and prevCharacter == ' ':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
                     view.run_command("move", {"by": "characters", "forward": True})
                     view.run_command("left_delete")
 
@@ -121,6 +136,7 @@ class LiquidHandleLeftBraceCommand(sublime_plugin.TextCommand):
                         view.run_command("insert", {"characters": '}'})
                         view.run_command("move", {"by": "characters", "forward": False})
 
+
 class LiquidHandleRightBraceCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         self.view.run_command("insert", {"characters": "}"})
@@ -135,9 +151,16 @@ class LiquidHandleRightBraceCommand(sublime_plugin.TextCommand):
             for region in selectedRegions:
                 prevCharacter = view.substr(sublime.Region(region.a - 2, region.a - 1))
                 nextCharacter = view.substr(sublime.Region(region.a, region.a + 1))
+                nextThreeCharacters = view.substr(sublime.Region(region.a, region.a + 3))
 
                 lineContents = view.substr(view.line(view.sel()[0]))
 
                 if nextCharacter == '}':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
+
+                if nextThreeCharacters == ' }}' and prevCharacter == ' ':
+                    view.run_command("move", {"by": "characters", "forward": True})
+                    view.run_command("left_delete")
                     view.run_command("move", {"by": "characters", "forward": True})
                     view.run_command("left_delete")
