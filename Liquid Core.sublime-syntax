@@ -139,7 +139,7 @@ contexts:
 
   liquid-variables:
     - match: ([a-zA-Z0-9_\-]+)
-      scope: variable.other
+      scope: variable.other.liquid
 
   constants:
     # If a word is in {{constants}} but followed by a colon, it's a named variable with the same name as a Liquid object
