@@ -142,15 +142,18 @@ contexts:
       scope: variable.other.liquid
 
   constants:
-    # If a word is in {{constants}} but followed by a colon, it's a named variable with the same name as a Liquid object
-    - match: '(?:(?<!\.))\b{{constants}}\b(?:(?!\:))'
-      scope: support.constant.liquid
     - match: '(?:(?<=section\.))(settings|blocks|id)'
       captures:
         1: support.constant.liquid
     - match: '(?:(?<=block\.))(settings|id|type|shopify_attributes)'
       captures:
         1: support.constant.liquid
+    # If a word is preceded by a single dot it’s a property (don’t capture two dots as that’s the range operator)
+    - match: (?:(?<=\.)(?<!\.\.))([a-zA-Z0-9_\-]+)
+      scope: meta.property.liquid
+    # If a word is in {{constants}} but followed by a colon, it's a named variable with the same name as a Liquid object
+    - match: '\b{{constants}}\b(?:(?!\:))'
+      scope: support.constant.liquid
 
   filters:
     - match: (\|)\s*([a-zA-Z0-9_\-]+)(\:)?
