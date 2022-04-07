@@ -68,11 +68,17 @@ class LiquidHandlePercentCommand(sublime_plugin.TextCommand):
                 if nextTwoCharacters == '%}':
                     view.run_command("move", {"by": "characters", "forward": True})
                     view.run_command("left_delete")
-                if nextThreeCharacters == ' %}' and prevCharacter == ' ':
-                    view.run_command("move", {"by": "characters", "forward": True})
-                    view.run_command("left_delete")
-                    view.run_command("move", {"by": "characters", "forward": True})
-                    view.run_command("left_delete")
+                if nextThreeCharacters == ' %}':
+                    if prevCharacter == ' ':
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("left_delete")
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("left_delete")
+                    else:
+                        view.run_command("left_delete")
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("move", {"by": "characters", "forward": True})
+
 
 
 
@@ -104,11 +110,16 @@ class LiquidHandleMinusCommand(sublime_plugin.TextCommand):
                     view.run_command("move", {"by": "characters", "forward": True})
                     view.run_command("left_delete")
 
-                if (nextFourCharacters == ' -}}' or nextFourCharacters == ' -%}') and prevCharacter == ' ':
-                    view.run_command("move", {"by": "characters", "forward": True})
-                    view.run_command("left_delete")
-                    view.run_command("move", {"by": "characters", "forward": True})
-                    view.run_command("left_delete")
+                if (nextFourCharacters == ' -}}' or nextFourCharacters == ' -%}'):
+                    if prevCharacter == ' ':
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("left_delete")
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("left_delete")
+                    else:
+                        view.run_command("left_delete")
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("move", {"by": "characters", "forward": True})
 
 
 
@@ -159,8 +170,13 @@ class LiquidHandleRightBraceCommand(sublime_plugin.TextCommand):
                     view.run_command("move", {"by": "characters", "forward": True})
                     view.run_command("left_delete")
 
-                if nextThreeCharacters == ' }}' and prevCharacter == ' ':
-                    view.run_command("move", {"by": "characters", "forward": True})
-                    view.run_command("left_delete")
-                    view.run_command("move", {"by": "characters", "forward": True})
-                    view.run_command("left_delete")
+                if nextThreeCharacters == ' }}':
+                    if prevCharacter == ' ':
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("left_delete")
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("left_delete")
+                    else:
+                        view.run_command("left_delete")
+                        view.run_command("move", {"by": "characters", "forward": True})
+                        view.run_command("move", {"by": "characters", "forward": True})
