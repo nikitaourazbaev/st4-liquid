@@ -149,7 +149,7 @@ contexts:
       captures:
         1: support.constant.liquid
     # If a word is preceded by a single dot it’s a property (don’t capture two dots as that’s the range operator)
-    - match: (?:(?<=\.)(?<!\.\.))([a-zA-Z0-9_\-]+)
+    - match: (?:(?<=\.)(?<!\.\.))([a-zA-Z0-9_\-]+)(\?)?
       scope: meta.property.liquid
     # If a word is in {{constants}} but followed by a colon, it's a named variable with the same name as a Liquid object
     - match: '\b{{constants}}\b(?:(?!\:))'
