@@ -117,7 +117,7 @@ contexts:
       scope: support.function.construct.liquid
     - match: \b(raw|endraw)\b
       scope: entity.name.tag.liquid
-    - match: (==|=|!=|>|<|>=|<=|)|\b(or|and|contains)\b
+    - match: (==|=|!=|>|<|>=|<=|)|\b(or|and|contains|by)\b
       scope: keyword.operator.expression.liquid
     - match: "-?%}"
       scope: punctuation.section.embedded.end.liquid
