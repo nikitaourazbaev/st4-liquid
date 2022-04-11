@@ -9,7 +9,7 @@ hidden: true
 variables:
   beginning: '(?:(?:(?<={%)|(?<={%-)|^)\s*)'
   # These are predefined Liquid objects on Shopify
-  constants: '(additional_checkout_buttons|address|all_country_option_tags|all_products|article|articles|block|blog|blogs|canonical_url|cart|checkout|collection|collections|comment|content_for_additional_checkout_buttons|content_for_header|content_for_index|content_for_layout|country_option_tags|currency|current_page|current_tags|customer|customer_address|discount_allocation|discount_application|external_video|font|forloop|form|fulfillment|gift_card|handle|image|images|line_item|link|linklist|linklists|location|localization|metafield|model|model_source|order|page|page_description|page_image|page_title|pages|paginate|part|policy|powered_by_link|predictive_search|product|product_option|product_variant|recommendations|request|routes|script|scripts|search|section|settings|selling_plan|selling_plan_allocation|selling_plan_group|settings|shipping_method|shop|shop_locale|store_availability|tablerow|tax_line|template|theme|transaction|unit_price_measurement|variant|video|video_source)'
+  constants: '(additional_checkout_buttons|address|all_country_option_tags|all_products|article|articles|block|blog|blogs|canonical_url|cart|checkout|collection|collections|comment|content_for_additional_checkout_buttons|content_for_header|content_for_index|content_for_layout|country_option_tags|currency|current_page|current_tags|customer|customer_address|discount_allocation|discount_application|external_video|font|forloop|form|fulfillment|gift_card|handle|image|images|line_item|link|linklist|linklists|location|localization|metafield|model|model_source|order|page|page_description|page_image|page_title|pages|paginate|part|policy|powered_by_link|predictive_search|paginate|product|product_option|product_variant|recommendations|request|routes|script|scripts|search|section|settings|selling_plan|selling_plan_allocation|selling_plan_group|settings|shipping_method|shop|shop_locale|store_availability|tablerow|tax_line|template|theme|transaction|unit_price_measurement|variant|video|video_source)'
 
 contexts:
   main:
@@ -99,10 +99,10 @@ contexts:
     - include: types
     - include: filters
     - include: parameters
-    - match: \b(for|in|endfor|break|continue|paginate|endpaginate)\b
-      scope: keyword.control
+    - match: \b(for|in|endfor|break|continue)\b
+      scope: keyword.control.liquid
     - match: \b(case|if|elsif|unless|endcase|when|else|endif|endunless)\b
-      scope: keyword.control.conditional
+      scope: keyword.control.conditional.liquid
     - match: \b(endcapture|cycle|increment|decrement|echo|with|as)\b
       scope: storage
     # Match words that follow assign and capture to catch ones that have the same name as a predefined Liquid object before they're matched against {{constants}}
@@ -113,6 +113,8 @@ contexts:
     - include: constants
     - match: '{{beginning}}(section|layout)(?!\:)\b'
       scope: support.function.construct.liquid
+    - match: '{{beginning}}(paginate|endpaginate)(?!\:)\b'
+      scope: keyword.control.liquid
     - match: \b(liquid|render)\b
       scope: support.function.construct.liquid
     - match: \b(raw|endraw)\b
