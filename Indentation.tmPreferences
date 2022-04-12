@@ -6,10 +6,10 @@
   <key>settings</key>
   <dict>
     <key>decreaseIndentPattern</key>
-    <string>^\s*{%-?\s*\b(else|elsif|endif|endfor|endcase|endpaginate|endcomment)\b.*-?%}.*$|^\s*-?%}\s*$</string>
+    <string>^\s*{%-?\s*\b(else|elsif|endif|endfor|endcase|endpaginate|endform|endcomment)\b.*-?%}.*$|^\s*-?%}\s*$</string>
 
     <key>increaseIndentPattern</key>
-    <string>^\s*{%-?\s*\b(if|else|elsif|for|case|paginate|comment|render)\b.*(-?%})?.*$</string>
+    <string>^\s*{%-?\s*\b(if|else|elsif|for|case|paginate|form|comment|render)\b.*(-?%})?.*$</string>
   </dict>
 </dict>
 </plist>
