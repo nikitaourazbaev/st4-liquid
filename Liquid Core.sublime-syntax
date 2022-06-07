@@ -99,7 +99,7 @@ contexts:
     - include: types
     - include: filters
     - include: parameters
-    - match: \b(for|in|endfor|break|continue|endform|endpaginate)\b
+    - match: \b(for|in|reversed|endfor|break|continue|endform|endpaginate)\b
       scope: keyword.control.liquid
     - match: \b(case|if|elsif|unless|endcase|when|else|endif|endunless)\b
       scope: keyword.control.conditional.liquid
