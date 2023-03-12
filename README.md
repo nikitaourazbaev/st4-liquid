@@ -1,7 +1,3 @@
-# January 2023 Update
-
-Unfortunately I no longer have time to dedicate to this project so I am archiving it and making it read-only. If someone is interested in taking it over, let me know.
-
 # Shopify Liquid Syntax Highlighting for Sublime Text 4
 
 Light-weight and minimal syntax highlighting for Shopify theme development in Sublime Text 4.
