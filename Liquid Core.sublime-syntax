@@ -87,11 +87,11 @@ contexts:
   expr-liquid:
     - meta_scope: source.liquid
     - match: '{{beginning}}comment'
-      scope: comment.liquid
+      scope: comment.block.liquid
       push:
-        - meta_scope: comment.liquid
+        - meta_scope: comment.block.liquid
         - match: '\bendcomment\b'
-          scope: comment.liquid
+          scope: comment.block.liquid
           pop: true
     - include: expr
 
@@ -127,6 +127,13 @@ contexts:
       scope: punctuation.section.embedded.end.liquid
       captures:
       pop: true
+    - match: '{{beginning}}#'
+      scope: comment.line.liquid
+      push:
+        - meta_scope: comment.line.liquid
+        - match: '\n'
+          scope: comment.line.liquid
+          pop: true
     - include: liquid-variables
 
 
