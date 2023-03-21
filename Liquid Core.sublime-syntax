@@ -112,7 +112,7 @@ contexts:
         1: storage
         2: variable.other.readwrite.liquid
     - include: constants
-    - match: '{{beginning}}(section|layout)(?!\:)\b'
+    - match: '{{beginning}}(section|sections|layout)(?!\:)\b'
       scope: support.function.construct.liquid
     - match: '{{beginning}}(paginate)(?!\:)\b'
       scope: keyword.control.liquid
