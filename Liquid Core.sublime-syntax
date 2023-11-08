@@ -198,7 +198,7 @@ contexts:
     - include: strings
     - match: '[0-9]+'
       scope: constant.numeric.liquid
-    - match: '\b(none|blank|empty|true|false|nil)\b'
+    - match: '\b(none|blank|empty|true|false|nil|null)\b'
       scope: constant.language.liquid
 
   strings:
