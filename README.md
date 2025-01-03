@@ -1,3 +1,6 @@
+This package is no longer maintained, please consider the official Liquid package:
+https://github.com/SublimeText/Liquid
+
 # Shopify Liquid Syntax Highlighting for Sublime Text 4
 
 Light-weight and minimal syntax highlighting for Shopify theme development in Sublime Text 4.
